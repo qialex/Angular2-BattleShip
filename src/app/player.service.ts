@@ -7,6 +7,11 @@ import 'rxjs/add/operator/filter';
 export class PlayerService {
   public player: Player = new Player();
   public opponent: Player = new Player();
+  public game: any = {
+      turnNumber: 0,
+      isHumanTurn: true
+  };
+
   public turnNumber: number = 0;
   public isHumanTurn: boolean = true;
 
@@ -86,11 +91,13 @@ export class PlayerService {
       this.turnNumber++;
       this.opponent.getFired(square);
       this.isHumanTurn = false;
+      this.game.isHumanTurn = false;
 
       const self = this;
       setTimeout(() => {
           self.player.getFired(this.opponentAI());
           self.isHumanTurn = true;
+          this.game.isHumanTurn = true;
       }, 100);
   }
 }

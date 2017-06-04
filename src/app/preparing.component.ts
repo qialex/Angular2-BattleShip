@@ -1,10 +1,10 @@
 import {Component, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
-import { PlayerService }  from './player.service';
+import { PlayerService } from './player.service';
 import { Player } from './player';
 
 @Component({
-    selector: 'preparing-component',
+    selector: 'app-preparing-component',
     templateUrl: './preparing.component.html',
     styleUrls: [ './preparing.component.css' ]
 })
@@ -16,7 +16,7 @@ export class PreparingComponent  {
     constructor(private router: Router, private playerService: PlayerService, private componentElement: ElementRef) {}
 
     onDragStart(event: any, ship: any) {
-        console.log('onDragStart');
+        // console.log('onDragStart');
         if (!ship) {
             return false;
         }
@@ -28,7 +28,7 @@ export class PreparingComponent  {
             this.player.removeShipFromField(ship);
         }
 
-        let div = document.createElement('div');
+        const div = document.createElement('div');
         div.style.transform = 'translateX(-1000px)';
         this.componentElement.nativeElement.appendChild(div);
         for (let i = 0; i < ship.blocks.length; i++) {
@@ -36,8 +36,8 @@ export class PreparingComponent  {
             innerDiv.style.width = 25 + 'px';
             innerDiv.style.height = 25 + 'px';
             innerDiv.style.backgroundSize = 25 + 'px';
-            // innerDiv.style.backgroundImage = 'url("./img/ship' + ship.blocks.length + '_' + (i + 1) + '.png")';
-            innerDiv.className = 'part' + ship.blocks.length + '_' + (i + 1);
+            innerDiv.classList.add('part' + ship.blocks.length + '_' + (i + 1));
+            innerDiv.className += (!ship.isVertical || ship.blocks.length === 1 ? ' shipHoriszontal' : '');
             innerDiv.style.transform = ship.isVertical ? 'rotate(90deg)' : '';
             innerDiv.style.display = ship.isVertical ? 'block' : 'inline-block';
             div.appendChild(innerDiv);
@@ -54,7 +54,7 @@ export class PreparingComponent  {
         this.player.markFieldUnderShip(square, this.draggedShip, false);
     }
     onDrop(event: any, square: any) {
-        console.log('onDrop');
+        // console.log('onDrop');
 
         this.player.tryToPlaceShip(square, this.draggedShip);
         this.player.markShipInAir(this.draggedShip, false);
@@ -63,7 +63,7 @@ export class PreparingComponent  {
     }
     onDragEnd(event: any) {
         event.preventDefault();
-        console.log('onDragEnd');
+        // console.log('onDragEnd');
 
         if (this.draggedShip) {
             this.player.markShipInAir(this.draggedShip, false);

@@ -1,44 +1,51 @@
 <div (selectstart)="preventDefault($event)">
 
-    <div class="field">
-        <div *ngFor="let row of player.field" class="row">
-            <div *ngFor="let square of row"
-                 class="square {{square.isShip ? 'part' + square.ship.blocks.length + '_' + (square.blockNum + 1)  : ''}}"
-                 [ngClass]="{
-                    openForShip: player.getPlacesForDraggedShip(square, draggedShip).length,
-                    placedShip: square.isShip,
-                    prePlacedShip: square.isUnderShip,
-                    part: square.isShip,
-                    shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical
-                 }"
-                 draggable="true"
-                 (drop)="onDrop($event, square)"
-                 (dragstart)="onDragStart($event, square.ship)"
-                 (dragover)="onDragOver($event, square)"
-                 (dragleave)="onDragLeave($event, square)"
-                 (dragend)="onDragEnd($event)"
-                 (contextmenu)="onContextMenuOnFieldShip($event, square)">
+    <div class="fieldBg">
+        <div class="shipControls">
+            <button (click)="player.randomSet()">Random</button>
+            <button routerLink="/battle" [disabled]="!player.allShipsArePlaced()">Start!</button>
+            <button (click)="player.clearField()">Clear</button>
+        </div>
+        <div class="field">
+            <div *ngFor="let row of player.field" class="row">
+                <div *ngFor="let square of row"
+                     class="square"
+                     [ngClass]="{
+                        closedForShip: !player.getPlacesForDraggedShip(square, draggedShip).length && draggedShip,
+                        placedShip: square.isShip,
+                        prePlacedShip: square.isUnderShip
+                     }"
+                     draggable="true"
+                     (drop)="onDrop($event, square)"
+                     (dragstart)="onDragStart($event, square.ship)"
+                     (dragover)="onDragOver($event, square)"
+                     (dragleave)="onDragLeave($event, square)"
+                     (dragend)="onDragEnd($event)"
+                     (contextmenu)="onContextMenuOnFieldShip($event, square)">
+                    <div *ngIf="square.isShip" class="part part{{square.ship.blocks.length}}_{{ square.blockNum + 1}}"
+                         [ngClass]="{ shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical }">
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="shipControls">
+            <button class="rotateHint">
+                <sup>*</sup>Use <b>right click</b> to <b>rotate</b> a ship.
+            </button>
         </div>
     </div>
 
-    <div class="ships" (contextmenu)="preventDefault($event)">
-        <div class="shipControls">
-            <button (click)="player.randomSet()">Random</button>
-            <button (click)="player.clearField()">Clear</button>
-            <button routerLink="/battle" [disabled]="!player.allShipsArePlaced()">Start!</button>
-        </div>
 
+    <div class="ships" (contextmenu)="preventDefault($event)">
         <div *ngFor="let shipBlock of player.shipsBySize; let i = index;" class="column">
-            {{4 - i}}
+            {{i + 1}}
             <div *ngFor="let ship of shipBlock">
                 <div class="ship ship_{{ship.blocks.length}}"
                      draggable="true"
                      (dragstart)="onDragStart($event, ship)"
                      (dragend)="onDragEnd($event)"
                      [ngClass]="{
-                        opacity50: ship.isInAir,
-                        shipHoriszontalHidden: !ship.isVertical && ship.isOnField
+                        opacity50: ship.isInAir
                      }"
                      (contextmenu)="onContextMenuOutsideShip($event, ship)">
 
@@ -57,8 +64,6 @@
 
 </div>
 
-<div>
-    <sup>*</sup>Use <b>right click</b> to <b>rotate</b> a ship.
-</div>
+
 
 

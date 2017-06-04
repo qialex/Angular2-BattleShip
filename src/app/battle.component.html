@@ -1,37 +1,46 @@
-<div class="field">
-    <div *ngFor="let row of player.field" class="row">
-        <div *ngFor="let square of row"
-             class="square {{square.isShip ? 'part' + square.ship.blocks.length + '_' + (square.blockNum + 1)  : ''}}"
-             [ngClass]="{
-                placedShip: square.isShip,
-                part: square.isShip,
-                shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical,
-                shipIsOnFire: square.isShip && square.isFired,
-                fieldIsOnFire: !square.isShip && square.isFired
-             }">
+<div class="fieldBg">
+    <div class="shipControls">
+        <button class="turnIndicator" [ngClass]="{ active: !game.isHumanTurn }"></button>
+        <button class="turnCounter">Turn: <b>{{turnNumber || 0}}</b></button>
+        <button class="turnIndicator" [ngClass]="{ active: game.isHumanTurn }"></button>
+    </div>
+    <div class="field fieldBorder">
+        <div *ngFor="let row of player.field" class="row">
+            <div *ngFor="let square of row"
+                 class="square"
+                 [ngClass]="{
+                    placedShip: square.isShip,
+                    shipIsOnFire: square.isShip && square.isFired,
+                    fieldIsOnFire: !square.isShip && square.isFired
+                 }">
+                <div *ngIf="square.isShip" class="part part{{square.ship.blocks.length}}_{{ square.blockNum + 1}}"
+                     [ngClass]="{ shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical }">
+                </div>
+            </div>
         </div>
+    </div>
+
+    <div class="field">
+        <div *ngFor="let row of opponent.field" class="row">
+            <div *ngFor="let square of row"
+                 class="square"
+                 [ngClass]="{
+                    placedShip: square.isShip,
+                    shipIsOnFire: square.isShip && square.isFired,
+                    fieldIsOnFire: !square.isShip && square.isFired
+                 }"
+                 (click)="onOpponentFieldClick(square)">
+                <div *ngIf="square.isShip && (opponent.areAllBlocksFired(square.ship) || player.allShipsAreOnFire())" class="part part{{square.ship.blocks.length}}_{{ square.blockNum + 1}}"
+                     [ngClass]="{ shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical }">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shipControls">
+        <button routerLink="/preparing">Quit</button>
     </div>
 </div>
 
-<div class="field">
-    <div *ngFor="let row of opponent.field" class="row">
-        <div *ngFor="let square of row"
-             class="square {{square.isShip && square.isFired ? 'part' + square.ship.blocks.length + '_' + (square.blockNum + 1)  : ''}}"
-             [ngClass]="{
-                placedShip: square.isShip && square.isFired,
-                part: square.isShip && square.isFired,
-                shipIsOnFire: square.isShip && square.isFired,
-                fieldIsOnFire: !square.isShip && square.isFired
-             }"
-             (click)="onOpponentFieldClick(square)">
-        </div>
-    </div>
-</div>
-
-<div>
-    <button routerLink="/preparing">Back</button>
-    Moves: {{turnNumber || 0}}
-</div>
 
 <div *ngIf="opponent.allShipsAreOnFire()">
     <b>You</b> win!

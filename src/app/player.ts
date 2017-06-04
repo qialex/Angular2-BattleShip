@@ -13,7 +13,7 @@ export class Player {
             for (let j = 0; j < i; j++) {
                 this.ships.push({
                     blocks: Array(5 - i).fill([undefined, undefined]),
-                    isVertical: true,
+                    isVertical: false,
                     isOnField: false,
                     isInAir: false,
                     isOnfire: false,
@@ -22,6 +22,7 @@ export class Player {
                 this.shipsBySize[i - 1].push(this.ships[this.ships.length - 1]);
             }
         }
+        this.shipsBySize = this.shipsBySize.reverse();
 
         for (let i = 0; i < 10; i++) {
             this.field.push([]);
@@ -314,5 +315,14 @@ export class Player {
                 }
             }
         }
+    }
+    public areAllBlocksFired(ship: any): boolean {
+        let result = true;
+        ship.blocks.map((coords: any) => {
+            if (!this.field[coords[0]][coords[1]].isFired) {
+                result = false;
+            }
+        });
+        return result;
     }
 }
