@@ -32,11 +32,12 @@ export class PreparingComponent  {
         div.style.transform = 'translateX(-1000px)';
         this.componentElement.nativeElement.appendChild(div);
         for (let i = 0; i < ship.blocks.length; i++) {
-            let innerDiv = document.createElement('div');
+            const innerDiv = document.createElement('div');
             innerDiv.style.width = 25 + 'px';
             innerDiv.style.height = 25 + 'px';
             innerDiv.style.backgroundSize = 25 + 'px';
-            innerDiv.style.backgroundImage = 'url("./img/ship' + ship.blocks.length + '_' + (i + 1) + '.png")';
+            // innerDiv.style.backgroundImage = 'url("./img/ship' + ship.blocks.length + '_' + (i + 1) + '.png")';
+            innerDiv.className = 'part' + ship.blocks.length + '_' + (i + 1);
             innerDiv.style.transform = ship.isVertical ? 'rotate(90deg)' : '';
             innerDiv.style.display = ship.isVertical ? 'block' : 'inline-block';
             div.appendChild(innerDiv);
