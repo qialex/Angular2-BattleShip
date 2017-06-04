@@ -1,0 +1,64 @@
+<div (selectstart)="preventDefault($event)">
+
+    <div class="field">
+        <div *ngFor="let row of player.field" class="row">
+            <div *ngFor="let square of row"
+                 class="square {{square.isShip ? 'part' + square.ship.blocks.length + '_' + (square.blockNum + 1)  : ''}}"
+                 [ngClass]="{
+                    openForShip: player.getPlacesForDraggedShip(square, draggedShip).length,
+                    placedShip: square.isShip,
+                    prePlacedShip: square.isUnderShip,
+                    part: square.isShip,
+                    shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical
+                 }"
+                 draggable="true"
+                 (drop)="onDrop($event, square)"
+                 (dragstart)="onDragStart($event, square.ship)"
+                 (dragover)="onDragOver($event, square)"
+                 (dragleave)="onDragLeave($event, square)"
+                 (dragend)="onDragEnd($event)"
+                 (contextmenu)="onContextMenuOnFieldShip($event, square)">
+            </div>
+        </div>
+    </div>
+
+    <div class="ships" (contextmenu)="preventDefault($event)">
+        <div class="shipControls">
+            <button (click)="player.randomSet()">Random</button>
+            <button (click)="player.clearField()">Clear</button>
+            <button routerLink="/battle" [disabled]="!player.allShipsArePlaced()">Start!</button>
+        </div>
+
+        <div *ngFor="let shipBlock of player.shipsBySize; let i = index;" class="column">
+            {{4 - i}}
+            <div *ngFor="let ship of shipBlock">
+                <div class="ship ship_{{ship.blocks.length}}"
+                     draggable="true"
+                     (dragstart)="onDragStart($event, ship)"
+                     (dragend)="onDragEnd($event)"
+                     [ngClass]="{
+                        opacity50: ship.isInAir,
+                        shipHoriszontalHidden: !ship.isVertical && ship.isOnField
+                     }"
+                     (contextmenu)="onContextMenuOutsideShip($event, ship)">
+
+                    <div *ngFor="let part of ship.blocks; let blockNum = index;"
+                         class="part part{{ship.blocks.length}}_{{blockNum + 1}}"
+                         [ngClass]="{
+                            hidden: ship.isOnField,
+                            shipHoriszontal: !ship.isVertical || ship.blocks.length === 1
+                         }">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div>
+    <sup>*</sup>Use <b>right click</b> to <b>rotate</b> a ship.
+</div>
+
+
