@@ -38,7 +38,7 @@
                     fieldIsOnFire: !square.isShip && square.isFired
                  }"
                  (click)="onOpponentFieldClick(square)">
-                <div *ngIf="square.isShip && (opponent.areAllBlocksFired(square.ship) || player.allShipsAreOnFire())" class="part part{{square.ship.blocks.length}}_{{ square.blockNum + 1}}"
+                <div *ngIf="square.isShip && (square.ship.areAllBlocksFired() || player.allShipsAreOnFire())" class="part part{{square.ship.blocks.length}}_{{ square.blockNum + 1}}"
                      [ngClass]="{ shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical }">
                 </div>
             </div>

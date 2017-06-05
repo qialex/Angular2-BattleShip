@@ -1,7 +1,10 @@
+import { Ship } from './ship';
+import { Square } from './square';
+
 export class Player {
-    ships: any;
-    shipsBySize: any;
-    field: any;
+    ships: Array<Ship>;
+    shipsBySize: Array<Array<Ship>>;
+    field: Array<Array<Square>>;
     shipsOnField: number;
     firedBlockCountTotal: number;
 
@@ -16,78 +19,56 @@ export class Player {
         for (let i = 1; i < 5; i++) {
             this.shipsBySize.push([]);
             for (let j = 0; j < i; j++) {
-                this.ships.push({
-                    blocks: Array(5 - i).fill([undefined, undefined]),
-                    firedBlockCount: 0,
-                    isVertical: false,
-                    isOnField: false,
-                    isInAir: false,
-                    isOnfire: false,
-                    isDrowned: false
-                });
+                this.ships.push(new Ship(5 - i));
                 this.shipsBySize[i - 1].push(this.ships[this.ships.length - 1]);
             }
         }
-        this.shipsBySize = this.shipsBySize.reverse();
+        this.shipsBySize.reverse();
 
         for (let i = 0; i < 10; i++) {
             this.field.push([]);
             for (let j = 0; j < 10; j++) {
-                this.field[i].push({
-                    x: i,
-                    y: j,
-                    isShip: false,
-                    isUnderShip: false,
-                    isNeighborOfShip: false,
-                    isFired: false,
-                    allNeighbors: [],
-                    diagonalNeighbors: [],
-                    verticalNeighbors: [],
-                    horizontalNeighbors: [],
-                    linearNeighbors: [],
-                    ship: undefined,
-                    blockNum: undefined,
-                });
+                this.field[i].push(new Square(i, j));
             }
         }
 
-        this.field.map((row: any, i: number) => row.map((square: any, j: number) => this.calculateNeighbors(square, i, j)));
+        this.field.map((row: Array<Square>, i: number) => row.map((square: Square, j: number) => this.calculateNeighbors(square, i, j)));
     }
-    private calculateNeighbors(square: any, i: number, j: number) {
+    private calculateNeighbors(square: Square, x: number, y: number) {
 
-        const neighbors: any = [
-            [i - 1, j - 1], [i - 1, j], [i - 1, j + 1],
-            [i, j - 1],                 [i, j + 1],
-            [i + 1, j - 1], [i + 1, j], [i + 1, j + 1],
+        const neighbors: Array<Array<number>> = [
+            [x - 1, y - 1], [x - 1, y], [x - 1, y + 1],
+            [x, y - 1],                 [x, y + 1],
+            [x + 1, y - 1], [x + 1, y], [x + 1, y + 1],
         ];
 
-        neighbors.map((coords: any, k: number) => {
+        neighbors.map((coords: Array<number>, i: number) => {
             if (this.field[coords[0]] && this.field[coords[0]][coords[1]]) {
                 square.allNeighbors.push(this.field[coords[0]][coords[1]]);
-                if ([0, 2, 5, 7].indexOf(k) > -1) {
+                if ([0, 2, 5, 7].indexOf(i) > -1) {
                     square.diagonalNeighbors.push(this.field[coords[0]][coords[1]]);
                 }
-                if ([1, 3, 4, 6].indexOf(k) > -1) {
+                if ([1, 3, 4, 6].indexOf(i) > -1) {
                     square.linearNeighbors.push(this.field[coords[0]][coords[1]]);
                 }
-                if ([1, 6].indexOf(k) > -1) {
+                if ([1, 6].indexOf(i) > -1) {
                     square.verticalNeighbors.push(this.field[coords[0]][coords[1]]);
                 }
-                if ([3, 4].indexOf(k) > -1) {
+                if ([3, 4].indexOf(i) > -1) {
                     square.horizontalNeighbors.push(this.field[coords[0]][coords[1]]);
                 }
             }
         });
     }
-    public getPlacesForDraggedShip(square: any, ship: any) {
+    public getPlacesForDraggedShip(square: Square, ship: Ship) {
         if (!ship || !square) {
             return [];
         }
 
-        const x = square.x;
-        const y = square.y;
+        const x: number = square.x;
+        const y: number = square.y;
 
-        let places: any = [];
+        let places: Array<Square> = [];
 
         if (ship.isVertical) {
             for (let i = x + (ship.blocks.length - 1) ; i >= x - (ship.blocks.length - 1); i--) {
@@ -127,7 +108,7 @@ export class Player {
 
         return [];
     }
-    public tryToPlaceShip(square: any, ship: any) {
+    public tryToPlaceShip(square: Square, ship: Ship) {
         const places = this.getPlacesForDraggedShip(square, ship);
 
         if (!places.length) {
@@ -136,29 +117,25 @@ export class Player {
 
         this.placeShip(places, ship);
     }
-    public placeShip(places: any, ship: any) {
-        for (let i = 0; i < places.length; i++) {
-            places[i].isShip = true;
-            places[i].isUnderShip = false;
-            places[i].ship = ship;
-            places[i].blockNum = i;
-            ship.blocks[i] = [places[i].x, places[i].y];
+    public placeShip(places: Array<Square>, ship: Ship) {
+        places.map((place: Square, i: number) => {
+            place.isShip = true;
+            place.isUnderShip = false;
+            place.ship = ship;
+            place.blockNum = i;
+            place.markNeighborsOfShip();
 
-            for (let j = 0; j < places[i].allNeighbors.length; j++) {
-                if (!places[i].allNeighbors[j].isShip) {
-                    places[i].allNeighbors[j].isNeighborOfShip = true;
-                }
-            }
-        }
+            ship.blocks[i] = [place.x, place.y];
+        });
         this.shipsOnField++;
         ship.isOnField = true;
     }
-    public removeShipFromField(ship: any) {
+    public removeShipFromField(ship: Ship) {
         ship.isOnField = false;
         this.shipsOnField--;
         for (let i = 0; i < ship.blocks.length; i++) {
-            let coords = ship.blocks[i];
-            let square = this.field[coords[0]][coords[1]];
+            const coords = ship.blocks[i];
+            const square: Square = this.field[coords[0]][coords[1]];
             square.isShip = false;
             square.ship = undefined;
             square.blockNum = undefined;
@@ -176,22 +153,16 @@ export class Player {
             }
         }
     }
-    public markFieldUnderShip (square: any, ship: any, doMark: boolean) {
-        const places: any = this.getPlacesForDraggedShip(square, ship);
-        places.map((place: any) => this.field[place.x][place.y].isUnderShip = doMark);
+    public markFieldUnderShip (square: Square, ship: Ship, doMark: boolean) {
+        const places: Array<Square> = this.getPlacesForDraggedShip(square, ship);
+        places.map((place: Square) => place.isUnderShip = doMark);
     }
-    public markShipInAir (ship: any, value: boolean) {
-        ship.isInAir = value;
-    }
-    public rotateShip(ship: any) {
-        ship.isVertical = !ship.isVertical;
-    }
-    public rotateShipOnField(square: any, otherBlocks: any) {
+    public rotateShipOnField(square: Square, otherBlocks: Array<Square>) {
         if (!square.ship || square.ship.blocks.length === 1) {
             return;
         }
 
-        let ship: any = square.ship;
+        const ship: Ship = square.ship;
         let block: any;
         let blockNum: number;
         square.ship.blocks.map((coords: any, i: number) => {
@@ -205,15 +176,15 @@ export class Player {
         newCoords = [Math.min(Math.max(newCoords[0], 0), 10), Math.min(Math.max(newCoords[1], 0), 10)];
 
         this.removeShipFromField(ship);
-        this.rotateShip(ship);
-        let places = this.getPlacesForDraggedShip(this.field[newCoords[0]][newCoords[1]], ship);
+        ship.rotate();
+        const places: Array<Square> = this.getPlacesForDraggedShip(this.field[newCoords[0]][newCoords[1]], ship);
 
         if (places.length) {
             this.placeShip(places, ship);
         } else {
-            this.rotateShip(ship);
-            let oldSquare = this.field[ship.blocks[0][0]][ship.blocks[0][1]];
-            let oldPlaces = this.getPlacesForDraggedShip(oldSquare, ship);
+            ship.rotate();
+            const oldSquare: Square = this.field[ship.blocks[0][0]][ship.blocks[0][1]];
+            const oldPlaces: Array<Square> = this.getPlacesForDraggedShip(oldSquare, ship);
             this.placeShip(oldPlaces, ship);
 
             if (otherBlocks) {
@@ -243,25 +214,25 @@ export class Player {
             this.clearField();
         }
 
-        this.ships.map((ship: any, k: number) => {
+        this.ships.map((ship: Ship) => {
             if (ship.isOnField) {
                 return;
             }
 
-            this.ships[k].isVertical = Math.random() > 0.5;
-            this.ships[k].isOnField = true;
+            ship.isVertical = Math.random() > 0.5;
+            ship.isOnField = true;
 
-            const opportunities: any = [];
-            this.field.map((row: any) => row.map((square: any) => {
-                const places = this.getPlacesForDraggedShip(square, ship);
+            const opportunities: Array<Array<Square>> = [];
+            this.field.map((row: Array<Square>) => row.map((square: Square) => {
+                const places: Array<Square> = this.getPlacesForDraggedShip(square, ship);
                 if (places.length) {
-                    opportunities.push({places: places});
+                    opportunities.push(places);
                 }
             }));
 
-            const randomOpportunitie = opportunities[Math.floor(Math.random() * opportunities.length)];
+            const randomPlaces: Array<Square> = opportunities[Math.floor(Math.random() * opportunities.length)];
 
-            this.placeShip(randomOpportunitie.places, ship);
+            this.placeShip(randomPlaces, ship);
         });
     }
     public clearField() {
@@ -269,10 +240,10 @@ export class Player {
     }
     public clearBatte() {
         this.firedBlockCountTotal = 0;
-        this.field.map((row: any, i: number) => row.map((square: any, j: number) => {
-            this.field[i][j].isFired = false;
+        this.field.map((row: Array<Square>) => row.map((square: Square) => {
+            square.isFired = false;
         }));
-        this.ships.map((ship: any) => {
+        this.ships.map((ship: Ship) => {
             ship.firedBlockCount = 0;
         });
     }
@@ -282,10 +253,7 @@ export class Player {
     public allShipsAreOnFire(): boolean {
         return this.firedBlockCountTotal === 20;
     }
-    public areAllBlocksFired(ship: any): boolean {
-        return ship.blocks.length === ship.firedBlockCount;
-    }
-    public getFired(square: any) {
+    public getFired(square: Square) {
         if (square.isFired) {
             return;
         }
@@ -295,20 +263,15 @@ export class Player {
         if (square.isShip) {
             this.firedBlockCountTotal++;
 
-            for (let i = 0; i < square.diagonalNeighbors.length; i++) {
-                square.diagonalNeighbors[i].isFired = true;
-            }
+            square.fireDiagonalNeighbors();
 
-            const ship: any = square.ship;
+            const ship: Ship = square.ship;
             ship.firedBlockCount++;
 
-            if (this.areAllBlocksFired(ship)) {
+            if (ship.areAllBlocksFired()) {
                 for (let i = 0; i < ship.blocks.length; i++) {
-                    const coords: any = ship.blocks[i];
-                    const sq: any = this.field[coords[0]][coords[1]];
-                    for (let j = 0; j < sq.allNeighbors.length; j++) {
-                        sq.allNeighbors[j].isFired = true;
-                    }
+                    const coords: Array<number> = ship.blocks[i];
+                    this.field[coords[0]][coords[1]].fireAllNeighbors();
                 }
             }
         }

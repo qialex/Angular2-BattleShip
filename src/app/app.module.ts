@@ -7,18 +7,18 @@ import { PlayerService } from './player.service';
 import { AppComponent } from './app.component';
 import { PreparingComponent } from './preparing.component';
 import { BattleComponent } from './battle.component';
-import { PageNotFoundComponent } from './page-not-found.component';
+import { PageNotFoundModule } from './page-not-found/page-not-found.module';
 
 @NgModule({
   imports:      [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PageNotFoundModule
   ],
   declarations: [
     AppComponent,
     PreparingComponent,
-    BattleComponent,
-    PageNotFoundComponent
+    BattleComponent
   ],
   providers: [
     PlayerService,

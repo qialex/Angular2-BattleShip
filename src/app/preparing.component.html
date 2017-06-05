@@ -1,4 +1,4 @@
-<div (selectstart)="preventDefault($event)">
+<div class="preparingBg" (selectstart)="preventDefault($event)">
 
     <div class="fieldBg">
         <div class="shipControls">
@@ -37,7 +37,7 @@
 
 
     <div class="ships" (contextmenu)="preventDefault($event)">
-        <div *ngFor="let shipBlock of player.shipsBySize; let i = index;" class="column height{{i + 1}}">
+        <div *ngFor="let shipBlock of player.shipsBySize; let i = index;" class="column">
             <div class="sizeLabel">{{i + 1}}</div>
             <div *ngFor="let ship of shipBlock"
                  class="ship ship_{{ship.blocks.length}} size{{ship.blocks.length}}"
