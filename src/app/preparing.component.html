@@ -4,7 +4,7 @@
         <div class="shipControls">
             <button (click)="player.randomSet()">Random</button>
             <button routerLink="/battle" [disabled]="!player.allShipsArePlaced()">Start!</button>
-            <button (click)="player.clearField()">Clear</button>
+            <button (click)="player.clearField()" [disabled]="!player.shipsOnField">Clear</button>
         </div>
         <div class="field">
             <div *ngFor="let row of player.field" class="row">
@@ -37,25 +37,24 @@
 
 
     <div class="ships" (contextmenu)="preventDefault($event)">
-        <div *ngFor="let shipBlock of player.shipsBySize; let i = index;" class="column">
-            {{i + 1}}
-            <div *ngFor="let ship of shipBlock">
-                <div class="ship ship_{{ship.blocks.length}}"
-                     draggable="true"
-                     (dragstart)="onDragStart($event, ship)"
-                     (dragend)="onDragEnd($event)"
-                     [ngClass]="{
-                        opacity50: ship.isInAir
-                     }"
-                     (contextmenu)="onContextMenuOutsideShip($event, ship)">
+        <div *ngFor="let shipBlock of player.shipsBySize; let i = index;" class="column height{{i + 1}}">
+            <div class="sizeLabel">{{i + 1}}</div>
+            <div *ngFor="let ship of shipBlock"
+                 class="ship ship_{{ship.blocks.length}} size{{ship.blocks.length}}"
+                 draggable="true"
+                 (dragstart)="onDragStart($event, ship)"
+                 (dragend)="onDragEnd($event)"
+                 [ngClass]="{
+                    opacity50: ship.isInAir
+                 }"
+                 (contextmenu)="onContextMenuOutsideShip($event, ship)">
 
-                    <div *ngFor="let part of ship.blocks; let blockNum = index;"
-                         class="part part{{ship.blocks.length}}_{{blockNum + 1}}"
-                         [ngClass]="{
-                            hidden: ship.isOnField,
-                            shipHoriszontal: !ship.isVertical || ship.blocks.length === 1
-                         }">
-                    </div>
+                <div *ngFor="let part of ship.blocks; let blockNum = index;"
+                     class="part part{{ship.blocks.length}}_{{blockNum + 1}}"
+                     [ngClass]="{
+                        hidden: ship.isOnField,
+                        shipHoriszontal: !ship.isVertical || ship.blocks.length === 1
+                     }">
                 </div>
             </div>
         </div>

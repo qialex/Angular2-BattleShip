@@ -1,11 +1,12 @@
 body {
   background-color: #8D8D69;
+  font-size: 0;
+  text-align: center;
 }
-
 h1 {
   // color: #369;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+  font-size: 40px;
 }
 app-battle-component {
   font-size: 0;
@@ -58,8 +59,10 @@ app-battle-component {
 .ships {
   vertical-align: top;
   display:inline-block;
-  margin-left:50px;
+  margin-left:30px;
   line-height: 0;
+  width:250px;
+  text-align: left;
 }
 
 .shipControls {
@@ -84,7 +87,7 @@ app-battle-component {
 }
 .shipControls button:disabled {
   background-color: #55552A;
-  opacity: 0.7;
+  opacity: 0.6;
   color: #C2C3A3;
 }
 .shipControls button:last-child {
@@ -107,6 +110,7 @@ app-battle-component {
 .shipControls button.turnIndicator {
   background-color: #415560;
   cursor: default;
+  color: #D1B33F;
 }
 .shipControls button.turnIndicator.active {
   background-color: #7F7B60;
@@ -117,17 +121,62 @@ app-battle-component {
 
 .column {
   vertical-align: top;
-  display:inline-block;
-  height: 270px;
+//  display:inline-block;
+//  height: 270px;
 // width: 50px;
-  text-align:center;
+
   line-height: 0;
+  padding: 13px 0;
+}
+.height1 {
+  height: 24px;
+}
+.height2 {
+  height: 48px;
+}
+.height3 {
+  height: 72px;
+}
+.height4 {
+  height: 96px;
+}
+.sizeLabel {
+  display: inline-block;
+  vertical-align: top;
+  width: 24px;
+  height: 24px;
+  background-color: #55552A;
+  color: #C2C3A3;
+  text-align: center;
+  line-height: 24px;
+  opacity: 0.85;
+  font-size: 16px;
+}
+.size1 {
+  width: 24px;
+  height: 24px;
+}
+.size2 {
+  width: 48px;
+  height: 48px;
+}
+.size3 {
+  width: 72px;
+  height: 72px;
+}
+.size4 {
+  width: 96px;
+  height: 96px;
 }
 
+
 .ship {
-  margin:20px 15px;
   line-height: 0;
   transition: all .2s ease-in-out;
+  display: inline-block;
+  padding: 0 10px;
+  vertical-align: bottom;
+  text-align: center;
 }
 .shipHoriszontal {
   display:inline-block;
@@ -186,4 +235,105 @@ app-battle-component {
 }
 .hidden {
   visibility: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.sk-folding-cube {
+  margin: 20px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  top: 200px;
+  -webkit-transform: rotateZ(45deg);
+  transform: rotateZ(45deg);
+}
+
+.sk-folding-cube .sk-cube {
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.sk-folding-cube .sk-cube:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+  animation: sk-foldCubeAngle 2.4s infinite linear both;
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+}
+.sk-folding-cube .sk-cube2 {
+  -webkit-transform: scale(1.1) rotateZ(90deg);
+  transform: scale(1.1) rotateZ(90deg);
+}
+.sk-folding-cube .sk-cube3 {
+  -webkit-transform: scale(1.1) rotateZ(180deg);
+  transform: scale(1.1) rotateZ(180deg);
+}
+.sk-folding-cube .sk-cube4 {
+  -webkit-transform: scale(1.1) rotateZ(270deg);
+  transform: scale(1.1) rotateZ(270deg);
+}
+.sk-folding-cube .sk-cube2:before {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+.sk-folding-cube .sk-cube3:before {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+.sk-folding-cube .sk-cube4:before {
+  -webkit-animation-delay: 0.9s;
+  animation-delay: 0.9s;
+}
+@-webkit-keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  } 25%, 75% {
+      -webkit-transform: perspective(140px) rotateX(0deg);
+      transform: perspective(140px) rotateX(0deg);
+      opacity: 1;
+    } 90%, 100% {
+        -webkit-transform: perspective(140px) rotateY(180deg);
+        transform: perspective(140px) rotateY(180deg);
+        opacity: 0;
+      }
+}
+
+@keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  } 25%, 75% {
+      -webkit-transform: perspective(140px) rotateX(0deg);
+      transform: perspective(140px) rotateX(0deg);
+      opacity: 1;
+    } 90%, 100% {
+        -webkit-transform: perspective(140px) rotateY(180deg);
+        transform: perspective(140px) rotateY(180deg);
+        opacity: 0;
+      }
 }

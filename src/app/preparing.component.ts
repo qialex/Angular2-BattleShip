@@ -30,6 +30,7 @@ export class PreparingComponent  {
 
         const div = document.createElement('div');
         div.style.transform = 'translateX(-1000px)';
+        div.style.textAlign = 'left';
         this.componentElement.nativeElement.appendChild(div);
         for (let i = 0; i < ship.blocks.length; i++) {
             const innerDiv = document.createElement('div');
