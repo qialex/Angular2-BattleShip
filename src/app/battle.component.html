@@ -2,14 +2,14 @@
     <div class="shipControls">
         <button class="turnIndicator" [ngClass]="{ active: !game.isHumanTurn }">
             <span *ngIf="!player.allShipsAreOnFire() && !opponent.allShipsAreOnFire()">{{20 - player.firedBlockCountTotal}}</span>
-            <span *ngIf="player.allShipsAreOnFire()">Lost</span>
-            <span *ngIf="opponent.allShipsAreOnFire()">Win</span>
+            <span *ngIf="player.allShipsAreOnFire()">You lose</span>
+            <span *ngIf="opponent.allShipsAreOnFire()">You win</span>
         </button>
-        <button class="turnCounter">Turn: <b>{{turnNumber || 0}}</b></button>
+        <button class="turnCounter">Turn: <b>{{game.turnNumber || 0}}</b></button>
         <button class="turnIndicator" [ngClass]="{ active: game.isHumanTurn }">
             <span *ngIf="!player.allShipsAreOnFire() && !opponent.allShipsAreOnFire()">{{20 - opponent.firedBlockCountTotal}}</span>
-            <span *ngIf="player.allShipsAreOnFire()">Win</span>
-            <span *ngIf="opponent.allShipsAreOnFire()">Lost</span>
+            <span *ngIf="player.allShipsAreOnFire()">AI wins</span>
+            <span *ngIf="opponent.allShipsAreOnFire()">AI loses</span>
         </button>
     </div>
     <div class="field fieldBorder">

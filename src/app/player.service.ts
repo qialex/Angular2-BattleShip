@@ -1,4 +1,4 @@
-import { Injectable }    from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Player } from './player';
 import { Router, NavigationStart } from '@angular/router';
 import 'rxjs/add/operator/filter';
@@ -12,17 +12,14 @@ export class PlayerService {
       isHumanTurn: true
   };
 
-  public turnNumber: number = 0;
-  public isHumanTurn: boolean = true;
-
   constructor(router: Router) {
     router.events
         .filter(event => event instanceof NavigationStart)
         .subscribe((event: NavigationStart) => {
           if (event.url === '/battle') {
             this.opponent.randomSet();
-            this.turnNumber = 0;
-            this.isHumanTurn = true;
+            this.game.turnNumber = 0;
+            this.game.isHumanTurn = true;
           }
           if (event.url === '/preparing') {
             this.player.clearBatte();
@@ -30,14 +27,14 @@ export class PlayerService {
         });
   }
   private opponentAI() {
-    let targets: any = [];
-    let firedTargets: any = [];
+    const targets: any = [];
+    const firedTargets: any = [];
     let finalTarget: any;
 
     for (let i = 0; i < this.player.field.length; i++) {
-        let row: any = this.player.field[i];
+        const row: any = this.player.field[i];
         for (let j = 0; j < row.length; j++) {
-            let square: any = row[j];
+            const square: any = row[j];
             if (square.isFired && square.isShip) {
                 for (let k = 0;  k < square.allNeighbors.length; k++) {
                     if (!square.allNeighbors[k].isFired) {
@@ -54,10 +51,10 @@ export class PlayerService {
     if (firedTargets.length) {
         finalTarget = firedTargets[Math.floor(Math.random() * firedTargets.length)];
     } else {
-        let filteredTargets: any = [];
-        let maximunUnfuredNeighbors: number = 0;
+        const filteredTargets: any = [];
+        let maximunUnfuredNeighbors = 0;
         for (let i = 0; i < targets.length; i++) {
-            let unfiredNeighbors: number = 0;
+            let unfiredNeighbors = 0;
             for (let j = 0; j < targets[i].allNeighbors.length; j++) {
                 if (!targets[i].allNeighbors[j].isFired) {
                     unfiredNeighbors++;
@@ -67,7 +64,7 @@ export class PlayerService {
         }
 
         for (let i = 0; i < targets.length; i++) {
-            let unfiredNeighbors: number = 0;
+            let unfiredNeighbors = 0;
             for (let j = 0; j < targets[i].allNeighbors.length; j++) {
                 if (!targets[i].allNeighbors[j].isFired) {
                     unfiredNeighbors++;
@@ -84,20 +81,18 @@ export class PlayerService {
     return finalTarget;
   }
   public fire (square: any) {
-      if (!this.isHumanTurn || square.isFired || this.opponent.allShipsAreOnFire() || this.player.allShipsAreOnFire() ) {
+      if (!this.game.isHumanTurn || square.isFired || this.opponent.allShipsAreOnFire() || this.player.allShipsAreOnFire() ) {
           return;
       }
 
-      this.turnNumber++;
+      this.game.turnNumber++;
       this.opponent.getFired(square);
-      this.isHumanTurn = false;
       this.game.isHumanTurn = false;
 
       const self = this;
       setTimeout(() => {
           self.player.getFired(this.opponentAI());
-          self.isHumanTurn = true;
-          this.game.isHumanTurn = true;
+          self.game.isHumanTurn = true;
       }, 100);
   }
 }
