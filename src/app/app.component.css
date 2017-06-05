@@ -1,0 +1,18 @@
+.header {
+    font-size:17px;
+    padding:25px 0 40px;
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #444526;
+}
+span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 200%;
+    color: #2b2d20;
+    font-weight: bold;
+}
+a {
+    font-size:100%;
+    color: #bdc1a2;
+    font-weight: bold;
+}

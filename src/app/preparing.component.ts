@@ -43,6 +43,7 @@ export class PreparingComponent  {
             innerDiv.style.display = ship.isVertical ? 'block' : 'inline-block';
             div.appendChild(innerDiv);
         }
+        event.dataTransfer.setData('Text', 'Text');
         event.dataTransfer.setDragImage(div, 75 , 75);
         setTimeout(() => div.remove());
     }
@@ -55,6 +56,7 @@ export class PreparingComponent  {
         this.player.markFieldUnderShip(square, this.draggedShip, false);
     }
     onDrop(event: any, square: any) {
+        event.preventDefault();
         // console.log('onDrop');
 
         this.player.tryToPlaceShip(square, this.draggedShip);

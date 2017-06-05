@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'my-app',
-  template: `
-      <h1>{{text}}</h1>
-      <router-outlet></router-outlet>
-  `
+  selector: 'app-battleship',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
 })
-export class AppComponent {
-  text: string = 'Angular Sea Battle game by qiAlex';
-}
+export class AppComponent {}
