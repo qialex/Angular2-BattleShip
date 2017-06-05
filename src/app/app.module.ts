@@ -2,30 +2,31 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
-import { BattleGuard } from './battle.guard';
+import { BattleGuard } from './battle/battle.guard';
 import { PlayerService } from './player.service';
 import { AppComponent } from './app.component';
-import { PreparingComponent } from './preparing.component';
-import { BattleComponent } from './battle.component';
+
 import { PageNotFoundModule } from './page-not-found/page-not-found.module';
+import { PreparingModule } from './preparing/preparing.module';
+import { BattleModule } from './battle/battle.module';
 
 @NgModule({
   imports:      [
     BrowserModule,
     AppRoutingModule,
-    PageNotFoundModule
+    PageNotFoundModule,
+    PreparingModule,
+    BattleModule
   ],
   declarations: [
-    AppComponent,
-    PreparingComponent,
-    BattleComponent
+    AppComponent
   ],
   providers: [
     PlayerService,
     BattleGuard
   ],
   bootstrap:    [
-      AppComponent
+    AppComponent
   ]
 })
 export class AppModule { }

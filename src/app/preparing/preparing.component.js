@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var player_service_1 = require("./player.service");
+var player_service_1 = require("../player.service");
 var PreparingComponent = (function () {
     function PreparingComponent(router, playerService, componentElement) {
         this.router = router;
@@ -83,8 +83,8 @@ var PreparingComponent = (function () {
 PreparingComponent = __decorate([
     core_1.Component({
         selector: 'preparing-component',
-        templateUrl: './preparing.component.html',
-        styleUrls: ['./preparing.component.css']
+        templateUrl: '../preparing.component.html',
+        styleUrls: ['../preparing.component.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, player_service_1.PlayerService, core_1.ElementRef])
 ], PreparingComponent);

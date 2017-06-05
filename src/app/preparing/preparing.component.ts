@@ -1,9 +1,9 @@
 import {Component, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
-import { PlayerService } from './player.service';
-import { Player } from './model/player';
-import { Ship } from './model/ship';
-import { Square } from './model/square';
+import { PlayerService } from '../player.service';
+import { Player } from '../model/player';
+import { Ship } from '../model/ship';
+import { Square } from '../model/square';
 
 @Component({
     selector: 'app-preparing-component',

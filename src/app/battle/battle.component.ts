@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
-import { PlayerService } from './player.service';
-import { Player } from './model/player';
-import { Game } from './model/game';
-import { Square } from './model/square';
+import { PlayerService } from '../player.service';
+import { Player } from '../model/player';
+import { Game } from '../model/game';
+import { Square } from '../model/square';
 
 @Component({
     selector: 'app-battle-component',
     templateUrl: './battle.component.html',
-    styleUrls: [ './preparing.component.css' ]
+    styleUrls: [ '../preparing/preparing.component.css' ]
 })
 
 export class BattleComponent {

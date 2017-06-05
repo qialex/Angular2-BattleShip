@@ -3,9 +3,10 @@ import {
     CanActivate,
     ActivatedRouteSnapshot,
     RouterStateSnapshot,
-    Router
+    Router,
+    Route
 } from '@angular/router';
-import { PlayerService }  from './player.service';
+import { PlayerService }  from '../player.service';
 
 @Injectable()
 export class BattleGuard implements CanActivate {
@@ -13,6 +14,9 @@ export class BattleGuard implements CanActivate {
     constructor(private playerService: PlayerService, private router: Router) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        return this.checkPlayerShips();
+    }
+    canLoad(route: Route): boolean {
         return this.checkPlayerShips();
     }
 
