@@ -1,0 +1,39 @@
+.field {
+    display:inline-block;
+    font-size: 0;
+    margin: 10px 0;
+}
+.fieldBorder {
+    border-right: 20px solid #2B2D20;
+}
+.row {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+}
+.square {
+    width:26px;
+    height:26px;
+    display:inline-block;
+    background-color: #558C14;
+    outline:1px solid #FFF7A2;
+    vertical-align: middle;
+}
+.closedForShip {
+    background-color:#C3C379 !important;
+}
+
+.prePlacedShip {
+    background-color:#C3C379 !important;
+}
+
+.shipIsOnFire {
+    background-color: #C65B39 !important;
+}
+.fieldIsOnFire {
+    background-color: #C0CE33 !important;
+}
+
+[draggable=true] .part {
+    cursor: move;
+}

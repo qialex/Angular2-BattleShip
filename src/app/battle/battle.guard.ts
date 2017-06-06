@@ -6,7 +6,7 @@ import {
     Router,
     Route
 } from '@angular/router';
-import { PlayerService }  from '../player.service';
+import { PlayerService } from '../player.service';
 
 @Injectable()
 export class BattleGuard implements CanActivate {

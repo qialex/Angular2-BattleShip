@@ -4,6 +4,7 @@ export class Square {
   x: number;
   y: number;
   isShip: boolean;
+  isDisabledForShip: boolean;
   isUnderShip: boolean;
   isNeighborOfShip: boolean;
   isFired: boolean;
@@ -18,6 +19,7 @@ export class Square {
     this.x = x;
     this.y = y;
     this.isShip = false;
+    this.isDisabledForShip = false;
     this.isUnderShip = false;
     this.isNeighborOfShip = false;
     this.isFired = false;

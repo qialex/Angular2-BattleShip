@@ -1,0 +1,65 @@
+.ships {
+    vertical-align: top;
+    display:inline-block;
+    margin-left:30px;
+    line-height: 0;
+    width:250px;
+    text-align: left;
+}
+
+.column {
+    vertical-align: top;
+    line-height: 0;
+    padding: 13px 0;
+}
+
+.sizeLabel {
+    display: inline-block;
+    vertical-align: top;
+    width: 24px;
+    height: 24px;
+    background-color: #55552A;
+    color: #C2C3A3;
+    text-align: center;
+    line-height: 24px;
+    opacity: 0.85;
+    font-size: 16px;
+}
+
+.size1 {
+    width: 24px;
+    height: 24px;
+}
+.size2 {
+    width: 48px;
+    height: 48px;
+}
+.size3 {
+    width: 72px;
+    height: 72px;
+}
+.size4 {
+    width: 96px;
+    height: 96px;
+}
+
+.ship {
+    line-height: 0;
+    transition: all .2s ease-in-out;
+    display: inline-block;
+    padding: 0 10px;
+    vertical-align: bottom;
+    text-align: center;
+}
+
+.shipScaled {
+    transform: scale(0.7);
+}
+
+[draggable] .part {
+    cursor: move;
+}
+
+.hidden {
+    visibility: hidden;
+}

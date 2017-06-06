@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { BattleGuard } from './battle/battle.guard';
-import { BattleComponent } from './battle/battle.component';
 
 const routes: Routes = [
     {

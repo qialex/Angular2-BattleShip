@@ -1,66 +1,21 @@
 <div class="preparingBg" (selectstart)="preventDefault($event)">
 
     <div class="fieldBg">
-        <div class="shipControls">
-            <button (click)="player.randomSet()">Random</button>
-            <button routerLink="/battle" [disabled]="!player.allShipsArePlaced()">Start!</button>
-            <button (click)="player.clearField()" [disabled]="!player.shipsOnField">Clear</button>
-        </div>
-        <div class="field">
-            <div *ngFor="let row of player.field" class="row">
-                <div *ngFor="let square of row"
-                     class="square"
-                     [ngClass]="{
-                        closedForShip: !player.getPlacesForDraggedShip(square, draggedShip).length && draggedShip,
-                        placedShip: square.isShip,
-                        prePlacedShip: square.isUnderShip
-                     }"
-                     draggable="true"
-                     (drop)="onDrop($event, square)"
-                     (dragstart)="onDragStart($event, square.ship)"
-                     (dragover)="onDragOver($event, square)"
-                     (dragleave)="onDragLeave($event, square)"
-                     (dragend)="onDragEnd($event)"
-                     (contextmenu)="onContextMenuOnFieldShip($event, square)">
-                    <div *ngIf="square.isShip" class="part part{{square.ship.blocks.length}}_{{ square.blockNum + 1}}"
-                         [ngClass]="{ shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical }">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="shipControls">
-            <button class="rotateHint">
-                <sup>*</sup>Use <b>right click</b> to <b>rotate</b> a ship.
-            </button>
-        </div>
+        <app-controls-component [type]="'preparingTop'"></app-controls-component>
+
+        <app-field-component
+                [field]="player.field"
+                [showShips]="true"
+                [showFieldBorder]="false"
+                [canFire]="false"
+                [isBattleMode]="false"
+                (rotateShip)="rotateShipOnF($event)">
+        </app-field-component>
+
+        <app-controls-component [type]="'preparingBottom'"></app-controls-component>
     </div>
 
-
-    <div class="ships" (contextmenu)="preventDefault($event)">
-        <div *ngFor="let shipBlock of player.shipsBySize; let i = index;" class="column">
-            <div class="sizeLabel">{{i + 1}}</div>
-            <div *ngFor="let ship of shipBlock"
-                 class="ship ship_{{ship.blocks.length}} size{{ship.blocks.length}}"
-                 draggable="true"
-                 (dragstart)="onDragStart($event, ship)"
-                 (dragend)="onDragEnd($event)"
-                 [ngClass]="{
-                    opacity50: ship.isInAir
-                 }"
-                 (contextmenu)="onContextMenuOutsideShip($event, ship)">
-
-                <div *ngFor="let part of ship.blocks; let blockNum = index;"
-                     class="part part{{ship.blocks.length}}_{{blockNum + 1}}"
-                     [ngClass]="{
-                        hidden: ship.isOnField,
-                        shipHoriszontal: !ship.isVertical || ship.blocks.length === 1
-                     }">
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    <app-ships-component [shipsBySize]="player.shipsBySize"></app-ships-component>
 </div>
 
 

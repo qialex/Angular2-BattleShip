@@ -2,189 +2,26 @@ body {
   background-color: #8D8D69;
   text-align: center;
 }
-.preparingBg {
-  font-size: 0;
-}
-.fieldBg {
-  background-color: #2B2D20;
-  display:inline-block;
-  border: 10px solid #2B2D20;
-  font-size: 0;
-}
-.field {
-  // width: 270px;
-  // height: 270px;
-  display:inline-block;
-  font-size: 0;
-  margin: 10px 0;
-}
-.fieldBorder {
-  border-right: 20px solid #2B2D20;
-}
-.row {
-  margin: 0;
-  padding: 0;
-  line-height: 0;
-}
-.square {
-  width:26px;
-  height:26px;
-  display:inline-block;
-  background-color: #558C14;
-  outline:1px solid #FFF7A2;
-  vertical-align: middle;
-}
-.closedForShip {
-  background-color:#C3C379 !important;
-}
-.placedShip {
-  // cursor: move;
-}
-.prePlacedShip {
-  background-color:#C3C379 !important;
-}
 
-.shipIsOnFire {
-  background-color: #C65B39 !important;
-}
-.fieldIsOnFire {
-  background-color: #C0CE33 !important;
-}
-
-.ships {
-  vertical-align: top;
-  display:inline-block;
-  margin-left:30px;
-  line-height: 0;
-  width:250px;
-  text-align: left;
-}
-
-.shipControls {
-  background-color: #2B2D20;
-  text-align: center;
-  padding:1px 0;
-  font-size: 16px;
-}
-.shipControls button{
-  min-width: 70px;
-  padding: 5px;
-  border: 0;
-  outline:none;
-  background-color: #FED650;
-  display: inline-block;
-  cursor: pointer;
-  height:27px;
-}
-.shipControls button:active {
-  border: 0;
-  outline:none;
-}
-.shipControls button:disabled {
-  background-color: #55552A;
-  opacity: 0.6;
-  color: #C2C3A3;
-}
-.shipControls button:last-child {
-  float: right;
-}
-.shipControls button:first-child {
-  float: left;
-}
-.shipControls button.rotateHint {
-  background-color: #55552A;
-  color: #C2C3A3;
-  cursor: default;
-  opacity: 0.85;
-  width:100%;
-}
-.shipControls button.turnCounter {
-  background-color: #C65B39;
-  cursor: default;
-}
-.shipControls button.turnIndicator {
-  background-color: #415560;
-  cursor: default;
-  color: #D1B33F;
-}
-.shipControls button.turnIndicator.active {
-  background-color: #7F7B60;
-  color: #C2C3A3;
-  cursor: default;
-}
-
-
-.column {
-  vertical-align: top;
-  line-height: 0;
-  padding: 13px 0;
-}
-
-.sizeLabel {
-  display: inline-block;
-  vertical-align: top;
-  width: 24px;
-  height: 24px;
-  background-color: #55552A;
-  color: #C2C3A3;
-  text-align: center;
-  line-height: 24px;
-  opacity: 0.85;
-  font-size: 16px;
-}
-.size1 {
-  width: 24px;
-  height: 24px;
-}
-.size2 {
-  width: 48px;
-  height: 48px;
-}
-.size3 {
-  width: 72px;
-  height: 72px;
-}
-.size4 {
-  width: 96px;
-  height: 96px;
-}
-
-
-.ship {
-  line-height: 0;
-  transition: all .2s ease-in-out;
-  display: inline-block;
-  padding: 0 10px;
-  vertical-align: bottom;
-  text-align: center;
-}
 .shipHoriszontal {
   display:inline-block;
   transform: rotate(0deg) !important;
 }
-
 .part{
   width:24px;
   height:24px;
   transform: rotate(90deg);
   background-size: 24px;
 }
-[draggable] .part {
-  cursor: move;
-}
-
 .part1_1{
   background-image: url("./img/part1_1_2.png");
 }
-
 .part2_1{
   background-image: url("./img/part4_1.png");
 }
-
 .part2_2{
   background-image: url("./img/part4_4.png");
 }
-
 .part3_1 {
   background-image: url("./img/part4_1.png");
 }
@@ -194,7 +31,6 @@ body {
 .part3_3{
   background-image: url("./img/part4_4.png");
 }
-
 .part4_1 {
   background-image: url("./img/part4_1.png");
 }
@@ -208,30 +44,12 @@ body {
   background-image: url("./img/part4_4.png");
 }
 
-.opacity50 {
-  // opacity: 0.5;
-  transform: scale(0.7);
-}
+
+
 
 /*
-.opacity100 {
-  opacity: 0;
-}
-*/
-
-.hidden {
-  visibility: hidden;
-}
-
-
-
-
-
-
-
-
-
-
+  PRELOADER
+ */
 
 .sk-folding-cube {
   margin: 20px auto;

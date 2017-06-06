@@ -1,0 +1,23 @@
+<div class="ships" (contextmenu)="preventDefault($event)">
+    <div *ngFor="let shipBlock of shipsBySize; let i = index;" class="column">
+        <div class="sizeLabel">{{i + 1}}</div>
+        <div *ngFor="let ship of shipBlock"
+             class="ship size{{ship.blocks.length}}"
+             draggable="true"
+             (dragstart)="dragndrop.onDragStart($event, ship)"
+             (dragend)="dragndrop.onDragEnd($event)"
+             [ngClass]="{
+                    shipScaled: ship.isInAir
+                 }"
+             (contextmenu)="onContextMenuOutsideShip($event, ship)">
+
+            <div *ngFor="let part of ship.blocks; let blockNum = index;"
+                 class="part part{{ship.blocks.length}}_{{blockNum + 1}}"
+                 [ngClass]="{
+                        hidden: ship.isOnField,
+                        shipHoriszontal: !ship.isVertical || ship.blocks.length === 1
+                     }">
+            </div>
+        </div>
+    </div>
+</div>

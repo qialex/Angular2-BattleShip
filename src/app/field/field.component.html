@@ -1,0 +1,26 @@
+<div class="field" [ngClass]="{fieldBorder: showFieldBorder}">
+    <div *ngFor="let row of field" class="row">
+        <div *ngFor="let square of row"
+             class="square"
+             [ngClass]="{
+                    shipIsOnFire: square.isShip && square.isFired,
+                    fieldIsOnFire: !square.isShip && square.isFired,
+                    prePlacedShip: square.isUnderShip,
+                    closedForShip: square.isDisabledForShip
+                 }"
+
+             [draggable]="!isBattleMode"
+             (drop)="dragndrop.onDrop($event, square)"
+             (dragstart)="dragndrop.onDragStart($event, square.ship)"
+             (dragover)="dragndrop.onDragOver($event, square)"
+             (dragleave)="dragndrop.onDragLeave($event, square)"
+             (dragend)="dragndrop.onDragEnd($event)"
+             (contextmenu)="onContextMenuOnFieldShip($event, square)"
+
+             (click)="onOpponentFieldClick(square)">
+            <div *ngIf="square.isShip && (square.ship.areAllBlocksFired() || showShips)" class="part part{{square.ship.blocks.length}}_{{ square.blockNum + 1}}"
+                 [ngClass]="{ shipHoriszontal: square.ship && square.ship.blocks.length === 1 || square.isShip && !square.ship.isVertical }">
+            </div>
+        </div>
+    </div>
+</div>

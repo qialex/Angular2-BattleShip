@@ -157,6 +157,18 @@ export class Player {
         const places: Array<Square> = this.getPlacesForDraggedShip(square, ship);
         places.map((place: Square) => place.isUnderShip = doMark);
     }
+    public markFieldDisabledForShip (ship: Ship) {
+        this.field.map((row: Array<Square>) => row.map((square: Square) => {
+            if (!this.getPlacesForDraggedShip(square, ship).length) {
+                square.isDisabledForShip = true;
+            }
+        }));
+    }
+    public unmarkFieldDisabledForShip () {
+        this.field.map((row: Array<Square>) => row.map((square: Square) => {
+            square.isDisabledForShip = false;
+        }));
+    }
     public rotateShipOnField(square: Square, otherBlocks: Array<Square>) {
         if (!square.ship || square.ship.blocks.length === 1) {
             return;

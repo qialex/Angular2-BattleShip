@@ -1,0 +1,26 @@
+<div class="shipControls" *ngIf="type === 'preparingTop'">
+    <button (click)="player.randomSet()">Random</button>
+    <button routerLink="/battle" [disabled]="!player.allShipsArePlaced()">Start!</button>
+    <button (click)="player.clearField()" [disabled]="!player.shipsOnField">Clear</button>
+</div>
+<div class="shipControls" *ngIf="type === 'preparingBottom'">
+    <button class="rotateHint">
+        <sup>*</sup>Use <b>right click</b> to <b>rotate</b> a ship.
+    </button>
+</div>
+<div class="shipControls" *ngIf="type === 'battleTop'">
+    <button class="turnIndicator" [ngClass]="{ active: !game.isHumanTurn }">
+        <span *ngIf="!player.allShipsAreOnFire() && !opponent.allShipsAreOnFire()">{{20 - player.firedBlockCountTotal}}</span>
+        <span *ngIf="player.allShipsAreOnFire()">You lose</span>
+        <span *ngIf="opponent.allShipsAreOnFire()">You win</span>
+    </button>
+    <button class="turnCounter">Turn: <b>{{game.turnNumber || 0}}</b></button>
+    <button class="turnIndicator" [ngClass]="{ active: game.isHumanTurn }">
+        <span *ngIf="!player.allShipsAreOnFire() && !opponent.allShipsAreOnFire()">{{20 - opponent.firedBlockCountTotal}}</span>
+        <span *ngIf="player.allShipsAreOnFire()">AI wins</span>
+        <span *ngIf="opponent.allShipsAreOnFire()">AI loses</span>
+    </button>
+</div>
+<div class="shipControls" *ngIf="type === 'battleBottom'">
+    <button routerLink="/preparing">Quit</button>
+</div>

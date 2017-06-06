@@ -1,0 +1,55 @@
+
+.shipControls {
+    background-color: #2B2D20;
+    text-align: center;
+    padding:1px 0;
+    font-size: 16px;
+}
+.shipControls button{
+    min-width: 70px;
+    padding: 5px;
+    border: 0;
+    outline:none;
+    background-color: #FED650;
+    display: inline-block;
+    cursor: pointer;
+    height:27px;
+}
+.shipControls button:active {
+    border: 0;
+    outline:none;
+}
+.shipControls button:disabled {
+    background-color: #55552A;
+    opacity: 0.6;
+    color: #C2C3A3;
+}
+.shipControls button:last-child {
+    float: right;
+}
+.shipControls button:first-child {
+    float: left;
+}
+
+.shipControls button.turnCounter {
+    background-color: #C65B39;
+    cursor: default;
+}
+.shipControls button.turnIndicator {
+    background-color: #415560;
+    cursor: default;
+    color: #D1B33F;
+}
+.shipControls button.turnIndicator.active {
+    background-color: #7F7B60;
+    color: #C2C3A3;
+    cursor: default;
+}
+
+.shipControls button.rotateHint {
+    background-color: #55552A;
+    color: #C2C3A3;
+    cursor: default;
+    opacity: 0.85;
+    width:100%;
+}

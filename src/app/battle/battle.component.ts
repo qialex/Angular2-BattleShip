@@ -7,7 +7,7 @@ import { Square } from '../model/square';
 @Component({
     selector: 'app-battle-component',
     templateUrl: './battle.component.html',
-    styleUrls: [ '../preparing/preparing.component.css' ]
+    styleUrls: [ './battle.component.css' ]
 })
 
 export class BattleComponent {
